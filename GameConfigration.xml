@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configure>
+	<MaxWidth>1000</MaxWidth>
+	<MaxHeight>1000</MaxHeight>
+	<WorldTreeWidth>10</WorldTreeWidth>
+	<WorldTreeHeight>10</WorldTreeHeight>
+	<TreePosistionX>500</TreePosistionX>
+	<TreePosistionY>500</TreePosistionY>
+	<TreeLifeRatio>1</TreeLifeRatio>
+	<TreeDefenceRatio>1</TreeDefenceRatio>
+	<TreeAttackRatio>1</TreeAttackRatio>
+	<StoneLifeRatio>-0.1</StoneLifeRatio>
+	<StoneDefenceRatio>0</StoneDefenceRatio>
+	<StoneAttackRatio>0</StoneAttackRatio>
+	<FlowerLifeRatio>0.2</FlowerLifeRatio>
+	<FlowerDefenceRatio>0.2</FlowerDefenceRatio>	
+	<FlowerAttackRatio>0.2</FlowerAttackRatio>
+	
+</Configure>
+
