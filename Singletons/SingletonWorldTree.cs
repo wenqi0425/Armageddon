@@ -65,17 +65,17 @@ namespace Armageddon
 
         public override double GetAttackRatio()
         {
-            return base.AttackRatio;
+            return _treeAttactRatio;
         }
 
         public override double GetDefenceRatio()
         {
-            return base.DefenceRatio;
+            return _treeDefenceRatio;
         }
 
         public override double GetLifeRatio()
         {
-            return base.LifeRatio;
+            return _treeLifeRatio;
         }
 
         private Position GetTreePosition()
