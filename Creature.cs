@@ -18,15 +18,9 @@ namespace Armageddon
 
     public class Creature
     {
-        List<AbstractDefenceItem> defenceItems { get; set; } = new List<AbstractDefenceItem>();
-        List<AbstractAttackItem> attackItems { get; set; } = new List<AbstractAttackItem>();
-        List<AbstractBuffItem> buffItems { get; set; } = new List<AbstractBuffItem>();
         public MoveDirection direction;
-        public Position position { get; set; }
-        public string Name { get; set; }
-        public double BasicHitPoint { get; set; }
-        public double BasicDefencePoint { get; set; }
-        public double BasicLifePoint { get; set; }
+        SingletonWorld world;
+
         public double TotalHitPoint { get; set; }
         public double TotalLifePoint { get; set; }
         public double TotalDefencePoint { get; set; }
@@ -34,28 +28,29 @@ namespace Armageddon
         public double TotalLifeRatio { get; set; }
         public double TotalDefenceRatio { get; set; }
 
-        public Creature(List<AbstractDefenceItem> defenceItems, List<AbstractAttackItem> attackItems, List<AbstractBuffItem> buffItems, MoveDirection direction, Position position, string name, double basicHitPoint, double basicDefencePoint, double basicLifePoint, double totalHitPoint, double totalLifePoint, double totalDefencePoint, double totalAttackRatio, double totalLifeRatio, double totalDefenceRatio)
+        List<AbstractDefenceItem> defenceItems { get; set; } = new List<AbstractDefenceItem>();
+        List<AbstractAttackItem> attackItems { get; set; } = new List<AbstractAttackItem>();
+        List<AbstractBuffItem> buffItems { get; set; } = new List<AbstractBuffItem>();        
+        public Position position { get; set; }
+        public string Name { get; set; }
+        public double BasicHitPoint { get; set; }
+        public double BasicDefencePoint { get; set; }
+        public double BasicLifePoint { get; set; }
+        
+        public Creature(List<AbstractDefenceItem> defenceItems, List<AbstractAttackItem> attackItems, List<AbstractBuffItem> buffItems, Position position, string name, double basicHitPoint, double basicDefencePoint, double basicLifePoint)
         {
             this.defenceItems = defenceItems;
             this.attackItems = attackItems;
             this.buffItems = buffItems;
-            this.direction = direction;
             this.position = position;
             Name = name;
             BasicHitPoint = basicHitPoint;
             BasicDefencePoint = basicDefencePoint;
             BasicLifePoint = basicLifePoint;
-            TotalHitPoint = totalHitPoint;
-            TotalLifePoint = totalLifePoint;
-            TotalDefencePoint = totalDefencePoint;
-            TotalAttackRatio = totalAttackRatio;
-            TotalLifeRatio = totalLifeRatio;
-            TotalDefenceRatio = totalDefenceRatio;
         }
 
-        public void Move()
+        public void Move(MoveDirection direction)
         {
-            Console.SetCursorPosition(this.position.X, this.position.Y);
             switch (direction)
             {
                 case MoveDirection.Up:
@@ -91,7 +86,10 @@ namespace Armageddon
                 {
                     attackItems.Add(attackItem);
                 }
-            }            
+            }
+
+            this.attackItems.Add(attackItem);
+            world.GetWorldObjects().Remove(attackItem);
         }
 
         public void PickDefenceItem(AbstractDefenceItem defenceItem)
