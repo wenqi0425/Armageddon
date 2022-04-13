@@ -38,7 +38,7 @@ namespace Armageddon
             
             _treeAttactRatio = Configuration.TreeAttackRatio;
             _treeDefenceRatio = Configuration.TreeDefenceRatio;
-            base.LifeRatio = Configuration.TreeLifeRatio;          
+            _treeLifeRatio = Configuration.TreeLifeRatio;          
 
             Trace.TraceLog(TraceEventType.Information, "Create a World Tree Buff");            
         }
@@ -78,12 +78,12 @@ namespace Armageddon
             return _treeLifeRatio;
         }
 
-        private Position GetTreePosition()
+        public override Position GetPosition()
         {
             return TreePosistion;
         }
 
-        public Size GetTreeSize()
+        public override Size GetSize()
         {
             return TreeSize;
         }

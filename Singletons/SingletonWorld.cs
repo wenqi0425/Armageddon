@@ -53,7 +53,7 @@ namespace Armageddon
             Trace.TraceLog(TraceEventType.Information, "Create a world with a Max Size");
         }
 
-        public IEnumerable<AbstractWorldObject> CreateItem()
+        public List<AbstractWorldObject> CreateItem()
         {
             var gun = new Gun(10, "Gun", 0.5, true, true, new (1,1), getRandomObjectPosition());
             var knife = new Knife(1, "Knife", 0.1, true, true, new(1, 1), getRandomObjectPosition());

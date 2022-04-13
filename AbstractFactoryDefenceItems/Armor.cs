@@ -27,5 +27,15 @@ namespace Armageddon
         {
             return base.LifeRatio;
         }
+
+        public override Position GetPosition()
+        {
+            return base.ItemPositon;
+        }
+
+        public override Size GetSize()
+        {
+            return base.ItemSize;
+        }
     }
 }

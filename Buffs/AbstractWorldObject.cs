@@ -21,6 +21,8 @@ namespace Armageddon
 
         public abstract double GetAttackRatio();
         public abstract double GetDefenceRatio();
-        public abstract double GetLifeRatio();        
+        public abstract double GetLifeRatio();
+        public abstract Size GetSize();
+        public abstract Position GetPosition();
     }
 }
