@@ -15,13 +15,13 @@ namespace Armageddon.AbstractFactoryBuffItems
             switch (itemType)
             {
                 case BuffProduct.MagicFlower:
-                    instance = new FlowerBuffDecorator(creature, name, lootable, removable, itemSize, itemPositon, defenceRatio, attackRatio, lifeRatio);
+                    instance = new FlowerBuffDecorator( name, lootable, removable, itemSize, itemPositon, defenceRatio, attackRatio, lifeRatio);
                     break;
                 case BuffProduct.SingletonWorldTree:
-                    instance = SingletonWorldTree.GetInstance(creature, name, lootable, removable, itemSize, itemPositon, defenceRatio, attackRatio, lifeRatio);
+                    instance = SingletonWorldTree.GetInstance(name, lootable, removable);
                     break;
                 case BuffProduct.NormalStone:
-                    instance = new StoneBuffDecorator(creature,name, lootable, removable, itemSize, itemPositon, defenceRatio, attackRatio, lifeRatio);
+                    instance = new StoneBuffDecorator(name, lootable, removable, itemSize, itemPositon, defenceRatio, attackRatio, lifeRatio);
                     break;
                 default:
                     Console.WriteLine("item type is not defined.");

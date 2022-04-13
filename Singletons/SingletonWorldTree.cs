@@ -12,12 +12,16 @@ namespace Armageddon
     
     public class SingletonWorldTree : AbstractBuffItem
     {
-        public Position TreePosistion;
-        public WorldTreeBuffDecorator WorldTreeBuff;
-        public Size TreeSize;
-        Creature creature;
+        private static Position TreePosistion;
+        private static WorldTreeBuffDecorator WorldTreeBuff;
+        private static Size TreeSize;
 
-        private SingletonWorldTree(Creature creature, string name, bool lootable, bool removable, Size itemSize, Position itemPositon, double defenceRatio, double attackRatio, double lifeRatio) 
+        private static double _treeAttactRatio;
+        private static double _treeDefenceRatio;
+        private static double _treeLifeRatio;
+
+
+        private SingletonWorldTree(string name, bool lootable, bool removable, Size itemSize, Position itemPositon, double defenceRatio, double attackRatio, double lifeRatio) 
             : base(name, lootable, removable, itemSize, itemPositon, defenceRatio, attackRatio, lifeRatio)
         {
             GetConfiguration();
@@ -26,36 +30,35 @@ namespace Armageddon
         private void GetConfiguration()
         {
             Configuration.ReadConfiguration();
-            GetTreeSize();
+            TreeSize = new Size(Configuration.WorldTreeWidth, Configuration.WorldTreeHeight);
             Trace.TraceLog(TraceEventType.Information, "Create a World Tree with a fixed size");
 
-            GetTreePosition();
+            TreePosistion = new Position(Configuration.TreePosistionX, Configuration.TreePosistionY);
             Trace.TraceLog(TraceEventType.Information, "Create a fixed position of the World Tree");
             
-            WorldTreeBuff.AttackRatio = Configuration.TreeAttackRatio;
-            WorldTreeBuff.DefenceRatio = Configuration.TreeDefenceRatio;
-            WorldTreeBuff.LifeRatio = Configuration.StoneLifeRatio;
-            Trace.TraceLog(TraceEventType.Information, "Create a World Tree Buff");
+            _treeAttactRatio = Configuration.TreeAttackRatio;
+            _treeDefenceRatio = Configuration.TreeDefenceRatio;
+            base.LifeRatio = Configuration.TreeLifeRatio;          
+
+            Trace.TraceLog(TraceEventType.Information, "Create a World Tree Buff");            
         }
 
         public WorldTreeBuffDecorator TouchTree(Creature creature, string name, bool lootable, bool removable, Size itemSize, Position itemPositon, double defenceRatio, double attackRatio, double lifeRatio)
         {
-            return new WorldTreeBuffDecorator(creature, name, lootable, removable, itemSize, itemPositon, defenceRatio, attackRatio, lifeRatio);
+            return new WorldTreeBuffDecorator(name, lootable, removable, itemSize, itemPositon, defenceRatio, attackRatio, lifeRatio);
         }
 
         private static SingletonWorldTree worldTree;
         private static readonly object syncRoot = new();         
 
-        public static SingletonWorldTree GetInstance(Creature creature, string name, bool lootable, bool removable, Size itemSize, Position itemPositon, double defenceRatio, double attackRatio, double lifeRatio)
+        public static SingletonWorldTree GetInstance(string name, bool lootable, bool removable)
         {
                 lock (syncRoot)
                 {
-                    if (worldTree == null)
-                    {
-                        worldTree = new SingletonWorldTree(creature,name, lootable, removable, itemSize, itemPositon, defenceRatio, attackRatio, lifeRatio);
-
-                    
-                    }
+                if (worldTree == null)
+                {
+                    worldTree = new SingletonWorldTree(name, lootable, removable, TreeSize, TreePosistion, _treeAttactRatio, _treeDefenceRatio, _treeLifeRatio);
+                }
                 return worldTree;
             }
         }
@@ -77,15 +80,11 @@ namespace Armageddon
 
         private Position GetTreePosition()
         {
-            TreePosistion.X = Configuration.TreePosistionX;
-            TreePosistion.Y = Configuration.TreePosistionY;
             return TreePosistion;
         }
 
-        private Size GetTreeSize()
+        public Size GetTreeSize()
         {
-            TreeSize.Width = Configuration.WorldTreeWidth;
-            TreeSize.Height = Configuration.WorldTreeHeight;
             return TreeSize;
         }
     }

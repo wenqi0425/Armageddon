@@ -24,10 +24,14 @@ namespace Armageddon
             if (value > 10 || value < 0) throw new ArgumentException("");
         }
 
-        public Size GetPostion()
+        public Size GetSize()
         {
             return this;
         }
-        
+
+        public override string ToString()
+        {
+            return "Width:" + Width + " Height:" + Height;
+        }
     }
 }

@@ -32,7 +32,8 @@ namespace Armageddon
 
             XmlDocument configDoc = new();
             //configDoc.Load("C:\\GameConfigration.xml" + @"\" + CONFIG_FILE);
-            configDoc.Load("C://Users/wenqi/Desktop/4th Semester/1.ASW/Assignment/Armageddon/GameConfigration.xml" + @"\" + CONFIG_FILE);        
+            // configDoc.Load("C://Users/wenqi/Desktop/4th Semester/1.ASW/Assignment/Armageddon/GameConfigration.xml" + @"\" + CONFIG_FILE);
+            configDoc.Load(/*"C:/Users/wenqi/Desktop/Assignment/Armageddon/GameConfigration.xml" + @"\" +*/ CONFIG_FILE);
 
             XmlNode MaxWidthNode = configDoc.DocumentElement.SelectSingleNode("MaxWidth");
             if (MaxWidthNode != null)

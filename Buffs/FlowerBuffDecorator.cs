@@ -8,11 +8,10 @@ namespace Armageddon
 {
     public class FlowerBuffDecorator : AbstractBuffItem
     {
-        Creature creature;
-        public FlowerBuffDecorator(Creature creature, string name, bool lootable, bool removable, Size itemSize, Position itemPositon, double defenceRatio, double attackRatio, double lifeRatio) 
+
+        public FlowerBuffDecorator(String name, bool lootable, bool removable, Size itemSize, Position itemPositon, double defenceRatio, double attackRatio, double lifeRatio) 
             : base(name, lootable, removable,itemSize, itemPositon, defenceRatio, attackRatio, lifeRatio)
         {
-            this.creature = creature;
         }
 
         public override double GetAttackRatio()

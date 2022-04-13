@@ -22,12 +22,17 @@ namespace Armageddon
 
         private void validatePositionValue(int value)
         {
-            if (value > 1000 || value < 0) throw new ArgumentException("");
+            if (value > 1000 || value < 0) throw new ArgumentException("Positon value beyounds world scope.");
         }
 
         public Position GetPostion()
         {
             return this;
+        }
+
+        public override string ToString()
+        {
+            return "X:" + X + " Y:" + Y;
         }
     }
 }

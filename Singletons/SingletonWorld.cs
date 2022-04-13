@@ -19,6 +19,7 @@ namespace Armageddon
         private static SingletonWorld world;
         private static readonly object syncRoot = new();
         Creature creature;
+
         List<AbstractWorldObject> worldObjects = new();
 
         public double MaxWidth;
@@ -60,11 +61,11 @@ namespace Armageddon
             var armor = new Armor("Armor", 0.2, true, true, new(1,1),getRandomObjectPosition());
             var helmet = new Helmet("Helmet", 0.1, true, true, new(1, 1), getRandomObjectPosition());
             var shield = new Shield("Shield", 0.3, true, true, new(1, 1), getRandomObjectPosition());
-            var flower = new FlowerBuffDecorator(creature, "Flower", true, true, new Size(1,1), getRandomObjectPosition(), 
+            var flower = new FlowerBuffDecorator( "Flower", true, true, new Size(1,1), getRandomObjectPosition(), 
                 Configuration.FlowerAttackRatio, Configuration.FlowerDefenceRatio, Configuration.FlowerLifeRatio);
-            var stone = new StoneBuffDecorator(creature, "Stone", false, true, new Size(1, 1), getRandomObjectPosition(),
+            var stone = new StoneBuffDecorator( "Stone", false, true, new Size(1, 1), getRandomObjectPosition(),
                 Configuration.StoneAttackRatio, Configuration.StoneDefenceRatio, Configuration.StoneLifeRatio);
-            var worldTree = new WorldTreeBuffDecorator(creature, "The World Tree", false, false, new Size(1, 1), 
+            var worldTree = new WorldTreeBuffDecorator("The World Tree", false, false, new Size(1, 1), 
                 new Position(Configuration.TreePosistionX,Configuration.TreePosistionY),Configuration.TreeAttackRatio, 
                 Configuration.TreeDefenceRatio, Configuration.TreeLifeRatio);
             return worldObjects;

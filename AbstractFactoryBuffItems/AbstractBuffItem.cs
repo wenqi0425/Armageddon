@@ -8,6 +8,8 @@ namespace Armageddon
 {
     public abstract class AbstractBuffItem : AbstractWorldObject
     {
+        protected Creature? creature = null;
+
         protected AbstractBuffItem(string name, bool lootable, bool removable,
             Size itemSize, Position itemPositon, double defenceRatio, double attackRatio, double lifeRatio)
         {
@@ -19,6 +21,11 @@ namespace Armageddon
             DefenceRatio = defenceRatio;
             AttackRatio = attackRatio;
             LifeRatio = lifeRatio;
+        }
+
+        public void SetCreature(Creature creature) 
+        {
+            this.creature = creature;
         }
     }
 }

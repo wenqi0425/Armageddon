@@ -121,16 +121,19 @@ namespace Armageddon
             {
                 if (buffItem is FlowerBuffDecorator)
                 {
+                    buffItem.SetCreature(this);
                     buffItems.Add(buffItem);
                 }
 
                 if (buffItem is StoneBuffDecorator)
                 {
+                    buffItem.SetCreature(this);
                     buffItems.Add(buffItem);
                 }
 
                 if (buffItem is WorldTreeBuffDecorator)
                 {
+                    buffItem.SetCreature(this);
                     buffItems.Add(buffItem);
                 }
             }                

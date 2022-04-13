@@ -10,10 +10,12 @@ namespace Armageddon
 {
     public class Trace
     {
-        public static TraceSource Source = new("GameApp"); // application to be traced        
+        public static TraceSource Source = new("GameDemo"); // application to be traced        
         static Trace()
         {
-            string path = "C: /Users/wenqi/Desktop/4th Semester/1.ASW/Assignment/Armageddon/GameConfigration.xml";
+            //string path = "C: /Users/wenqi/Desktop/4th Semester/1.ASW/Assignment/Armageddon/GameConfigration.xml";
+            //string path = "C:/Users/wenqi/Desktop/Assignment/Armageddon/GameConfigration.xml";
+            string path = "C:/Users/wenqi/Desktop/Assignment/Armageddon/";
             string fileName = "ArmageddonLog";
             string fullPath = Path.Combine(path, fileName);
             Source.Switch = new SourceSwitch("GameLog", "All");  // Title of the log file. 
