@@ -1,4 +1,5 @@
 ﻿using Armageddon.AbstractFactoryAttackItems;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,7 +29,7 @@ namespace Armageddon
         {
             GetConfiguration();
             CreateItem();
-            CreateCreatures();
+            //CreateCreatures();
         }
 
         public static SingletonWorld GetInstance()
@@ -40,6 +41,9 @@ namespace Armageddon
                     if (world == null)
                     {
                         world = new SingletonWorld();
+                        //after world is created, createing creatures. 
+                        //this sequence is critical. 
+                        world.CreateCreatures();
                     }
                 }
             }
@@ -69,51 +73,53 @@ namespace Armageddon
             var defenceItems = new List<AbstractDefenceItem>();
             var attackItems = new List<AbstractAttackItem>();
             var buffItems = new List<AbstractBuffItem>();
-            
-            var AAA = new Creature(defenceItems, attackItems, buffItems, 
-                getRandomObjectPosition(),"AAA",20,20,200);
+
+            var AAA = new Creature(defenceItems, attackItems, buffItems,
+                GetRandomObjectPosition(), "AAA", 20, 20, 200);
             creatures.Add(AAA);
-            
+            AAA.SetWorld(world);
+
             var BBB = new Creature(defenceItems, attackItems, buffItems,
-                getRandomObjectPosition(), "BBB", 20, 20, 200);
+                GetRandomObjectPosition(), "BBB", 20, 20, 200);
             creatures.Add(BBB);
+            BBB.SetWorld(world);
         }
 
-            private void CreateItem()
+        private void CreateItem()
         {
-            var gun = new Gun(10, "Gun", 0.5, true, true, new (1,1), getRandomObjectPosition());
+            var gun = new Gun(10, "Gun", 0.5, true, true, new(1, 1), GetRandomObjectPosition());
             worldObjects.Add(gun);
-            
-            var knife = new Knife(1, "Knife", 0.1, true, true, new(1, 1), getRandomObjectPosition());
+
+            var knife = new Knife(1, "Knife", 0.1, true, true, new(1, 1), GetRandomObjectPosition());
             worldObjects.Add(knife);
-            
-            var sword = new Sword(5, "Sword", 0.2, true, true, new(1, 2), getRandomObjectPosition());
+
+            var sword = new Sword(5, "Sword", 0.2, true, true, new(1, 2), GetRandomObjectPosition());
             worldObjects.Add(sword);
-            
-            var armor = new Armor("Armor", 0.2, true, true, new(1,1),getRandomObjectPosition());
+
+            var armor = new Armor("Armor", 0.2, true, true, new(1, 1), GetRandomObjectPosition());
             worldObjects.Add(armor);
 
-            var helmet = new Helmet("Helmet", 0.1, true, true, new(1, 1), getRandomObjectPosition());
+            var helmet = new Helmet("Helmet", 0.1, true, true, new(1, 1), GetRandomObjectPosition());
             worldObjects.Add(helmet);
 
-            var shield = new Shield("Shield", 0.3, true, true, new(1, 1), getRandomObjectPosition());
+            var shield = new Shield("Shield", 0.3, true, true, new(1, 1), GetRandomObjectPosition());
             worldObjects.Add(shield);
 
-            var flower = new FlowerBuffDecorator( "Flower", true, true, new Size(1,1), getRandomObjectPosition(), 
+            var flower = new FlowerBuffDecorator("Flower", true, true, new Size(1, 1), GetRandomObjectPosition(),
                 Configuration.FlowerAttackRatio, Configuration.FlowerDefenceRatio, Configuration.FlowerLifeRatio);
             worldObjects.Add(flower);
 
-            var stone = new StoneBuffDecorator( "Stone", false, true, new Size(1, 1), getRandomObjectPosition(),
+            var stone = new StoneBuffDecorator("Stone", false, true, new Size(1, 1), GetRandomObjectPosition(),
                 Configuration.StoneAttackRatio, Configuration.StoneDefenceRatio, Configuration.StoneLifeRatio);
             worldObjects.Add(stone);
 
-            var worldTree = new WorldTreeBuffDecorator("The World Tree", false, false, new Size(1, 1), 
-                new Position(Configuration.TreePosistionX,Configuration.TreePosistionY),Configuration.TreeAttackRatio, 
+            var worldTree = new WorldTreeBuffDecorator("The World Tree", false, false, new Size(1, 1),
+                new Position(Configuration.TreePosistionX, Configuration.TreePosistionY), Configuration.TreeAttackRatio,
                 Configuration.TreeDefenceRatio, Configuration.TreeLifeRatio);
-            worldObjects.Add(worldTree);            
+            worldObjects.Add(worldTree);
         }
 
-        private Position getRandomObjectPosition()
+        private Position GetRandomObjectPosition()
         {
             Random random = new();
             return new Position(random.Next(1, 1000), random.Next(1, 1000));

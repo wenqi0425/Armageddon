@@ -24,5 +24,12 @@ namespace Armageddon
         public abstract double GetLifeRatio();
         public abstract Size GetSize();
         public abstract Position GetPosition();
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
+
+
 }
