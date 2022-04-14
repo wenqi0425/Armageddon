@@ -2,6 +2,7 @@
 using Armageddon.AbstractFactoryBuffItems;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,29 +29,32 @@ namespace Armageddon
         public double TotalLifeRatio { get; set; }
         public double TotalDefenceRatio { get; set; }
         List<AbstractWorldObject> worldObjects = new List<AbstractWorldObject>();
-
-        List<AbstractDefenceItem> defenceItems  = new List<AbstractDefenceItem>();
+        List<AbstractDefenceItem> defenceItems = new List<AbstractDefenceItem>();
         List<AbstractAttackItem> attackItems = new List<AbstractAttackItem>();
-        List<AbstractBuffItem> buffItems  = new List<AbstractBuffItem>();        
+        List<AbstractBuffItem> buffItems = new List<AbstractBuffItem>();
+        
+        // the following properties will be set in the constructor
         public Position position { get; set; }
         public string Name { get; set; }
         public double BasicHitPoint { get; set; }
         public double BasicDefencePoint { get; set; }
         public double BasicLifePoint { get; set; }
+        public double BasicAttackRatio { get; set; }
+        public double BasicDefenceRatio { get; set; }
+        public double BasicLifeRatio { get; set; }
 
-        public Creature(List<AbstractDefenceItem> defenceItems, List<AbstractAttackItem> attackItems, List<AbstractBuffItem> buffItems, 
-            Position position, string name, double basicHitPoint, double basicDefencePoint, double basicLifePoint)
+        public Creature(Position position, string name, double basicHitPoint, double basicDefencePoint, double basicLifePoint, double basicAttackRatio, double basicDefenceRatio, double basicLifeRatio)
         {
-            this.defenceItems = defenceItems;
-            this.attackItems = attackItems;
-            this.buffItems = buffItems;
-            this.worldObjects = worldObjects;
             this.position = position;
             Name = name;
             BasicHitPoint = basicHitPoint;
             BasicDefencePoint = basicDefencePoint;
             BasicLifePoint = basicLifePoint;
-        }    
+            BasicAttackRatio = basicAttackRatio;
+            BasicDefenceRatio = basicDefenceRatio;
+            BasicLifeRatio = basicLifeRatio;
+        }
+
 
         public void Move(MoveDirection direction)
         {
@@ -83,8 +87,7 @@ namespace Armageddon
             //{
                 if (worldObject is Gun gun)
                 {
-                Console.WriteLine("pick up a gun");
-                this.attackItems.Add(gun);
+                    this.attackItems.Add(gun);
                     world.GetWorldObjects().Remove(worldObject);
                 }
 
@@ -151,86 +154,109 @@ namespace Armageddon
         public List<AbstractBuffItem> GetBuffItems()
         {
             return buffItems;
-        }        
+        }   
+        
+        public double GetTotalLifeRatio()
+        {
+            double bufflifeRatio = 0;
+            foreach (var buffItem in this.buffItems)
+            {
+                bufflifeRatio += buffItem.LifeRatio;
+            }
+
+            this.TotalLifeRatio = 1 + bufflifeRatio;
+            return this.TotalLifeRatio;
+        }
 
         public double GetTotalLifePoint()
         {
-            double basicLifeRatio = 1;
-            foreach (var buffItem in this.buffItems)
-            {
-                this.TotalLifeRatio += buffItem.LifeRatio;
-            }
-
-            TotalLifeRatio += basicLifeRatio;
-
-            this.TotalLifePoint = this.BasicLifePoint * TotalLifeRatio;
-
+            this.TotalLifePoint = this.BasicLifePoint * GetTotalLifeRatio()
             return TotalLifePoint;
         }
 
-
-        public double GetTotalHitPoint()
+        public double GetTotalAttackRatio()
         {
-            double basicAttackRatio = 1;
+            double buffAttackRatio = 0;
+            double attackItemRatio = 0;
+
             foreach (var buffItem in this.buffItems)
             {
-                this.TotalAttackRatio += buffItem.AttackRatio;
+                buffAttackRatio += buffItem.AttackRatio;
             }
 
             foreach (var attackItem in this.attackItems)
             {
-                this.TotalAttackRatio += attackItem.AttackRatio;
+                attackItemRatio += attackItem.AttackRatio;
             }
 
-            TotalAttackRatio += basicAttackRatio;
-
-            this.TotalHitPoint = this.BasicHitPoint * TotalAttackRatio;
-
-            return TotalHitPoint;
+            this.TotalAttackRatio = 1 + buffAttackRatio + attackItemRatio;
+            return this.TotalAttackRatio;
         }
 
-        public double GetTotalDefencePoint()
+        public double GetTotalHitPoint()
         {
-            double basicDefenceRatio = 1;
+            this.TotalHitPoint = this.BasicHitPoint * GetTotalAttackRatio();
+            return this.TotalHitPoint;
+        }
+
+        public double GetTotalDefenceRatio()
+        {
+            double buffDefenceRatio = 0;
+            double defenceItemRatio = 0;
+
             foreach (var buffItem in this.buffItems)
             {
-                this.TotalDefenceRatio += buffItem.DefenceRatio;
+                buffDefenceRatio += buffItem.DefenceRatio;
             }
 
             foreach (var defenceItem in this.defenceItems)
             {
-                this.TotalDefenceRatio += defenceItem.DefenceRatio;
+                defenceItemRatio += defenceItem.DefenceRatio;
             }
 
-            TotalAttackRatio += basicDefenceRatio;
+            this.TotalDefenceRatio = 1 + buffDefenceRatio + defenceItemRatio;
+            return this.TotalDefenceRatio;
+        }
 
-            this.TotalDefencePoint = this.BasicDefencePoint * TotalDefenceRatio;
-
+        public double GetTotalDefencePoint()
+        {
+            this.TotalDefencePoint = this.BasicDefencePoint * GetTotalDefenceRatio();
             return TotalDefencePoint;
         }
 
         public void Hit(Creature attacked)
         {
-            if(this.TotalHitPoint > attacked.TotalDefencePoint)
+            Console.WriteLine("hit");
+            double injurePoint = this.GetTotalHitPoint() - attacked.GetTotalDefencePoint();
+            double totalLifePoint = attacked.GetTotalLifePoint();
+            Console.WriteLine("Before hitting, has life point: " + totalLifePoint);
+            if (this.GetTotalHitPoint() > attacked.GetTotalDefencePoint())
             {
-                attacked.TotalLifePoint -= (this.TotalHitPoint - attacked.TotalDefencePoint);
+                totalLifePoint -= injurePoint;
+                Console.WriteLine("1. After hitting, has life point: " + totalLifePoint);
             }
             else
             {
-                attacked.TotalLifePoint -= 1;
-            }            
+                totalLifePoint -= 1;
+                Console.WriteLine("2. After hitting, has life point: " + totalLifePoint);
+            }
+
+            attacked.TotalLifePoint = totalLifePoint;
         }
 
-        public void ReceiveHit(Creature attacker)
-        {
-            if(attacker.TotalHitPoint > this.TotalDefencePoint)
-            {
-                this.TotalLifePoint -= (attacker.TotalHitPoint - this.TotalDefencePoint);
-            }
-            else
-            {
-                this.TotalLifePoint -= 1;
-            }            
-        }        
+        //public void ReceiveHit(Creature attacker)
+        //{
+        //    double injurePoint = attacker.GetTotalHitPoint() - attacker.GetTotalDefencePoint();
+        //    double totalLifePoint = attacker.GetTotalLifePoint();
+        //    if (attacker.GetTotalHitPoint() > this.GetTotalDefencePoint())
+        //    {
+        //        totalLifePoint -= injurePoint;
+        //    }
+        //    else
+        //    {
+        //        totalLifePoint -= 1;
+        //    }
+        //    attacker.TotalLifePoint = totalLifePoint;
+        //}        
     }
 }

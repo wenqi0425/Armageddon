@@ -9,12 +9,12 @@
 	<TreeLifeRatio>1</TreeLifeRatio>
 	<TreeDefenceRatio>1</TreeDefenceRatio>
 	<TreeAttackRatio>1</TreeAttackRatio>
-	<StoneLifeRatio>-0.1</StoneLifeRatio>
+	<StoneLifeRatio>-0,1</StoneLifeRatio>
 	<StoneDefenceRatio>0</StoneDefenceRatio>
 	<StoneAttackRatio>0</StoneAttackRatio>
-	<FlowerLifeRatio>0.2</FlowerLifeRatio>
-	<FlowerDefenceRatio>0.2</FlowerDefenceRatio>	
-	<FlowerAttackRatio>0.2</FlowerAttackRatio>
+	<FlowerLifeRatio>0,2</FlowerLifeRatio>
+	<FlowerDefenceRatio>0,2</FlowerDefenceRatio>	
+	<FlowerAttackRatio>0,2</FlowerAttackRatio>
 	
 </Configure>
 

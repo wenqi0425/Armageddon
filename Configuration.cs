@@ -119,13 +119,15 @@ namespace Armageddon
                 StoneAttackRatio = Convert.ToDouble(str);
             }
 
-            //
+            // 0.2 has been converted to 2. Don't know why. 
             XmlNode FlowerLifeRatioNode = configDoc.DocumentElement.SelectSingleNode("FlowerLifeRatio");
             if (FlowerLifeRatioNode != null)
             {
                 String str = FlowerLifeRatioNode.InnerText.Trim();
                 FlowerLifeRatio = Convert.ToDouble(str);
             }
+
+
 
             XmlNode FlowerDefenceRatioNode = configDoc.DocumentElement.SelectSingleNode("FlowerDefenceRatio");
             if (FlowerDefenceRatioNode != null)

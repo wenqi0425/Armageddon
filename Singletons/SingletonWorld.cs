@@ -74,13 +74,11 @@ namespace Armageddon
             var attackItems = new List<AbstractAttackItem>();
             var buffItems = new List<AbstractBuffItem>();
 
-            var AAA = new Creature(defenceItems, attackItems, buffItems,
-                GetRandomObjectPosition(), "AAA", 20, 20, 200);
+            var AAA = new Creature(GetRandomObjectPosition(), "AAA", 20, 10, 200, 1, 1, 1);
             creatures.Add(AAA);
             AAA.SetWorld(world);
 
-            var BBB = new Creature(defenceItems, attackItems, buffItems,
-                GetRandomObjectPosition(), "BBB", 20, 20, 200);
+            var BBB = new Creature(GetRandomObjectPosition(), "BBB", 20, 10, 200, 1, 1, 1);
             creatures.Add(BBB);
             BBB.SetWorld(world);
         }
