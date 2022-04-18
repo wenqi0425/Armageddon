@@ -1,5 +1,4 @@
-﻿using Armageddon.AbstractFactoryBuffItems;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Xml.Linq;
 
@@ -19,7 +18,6 @@ namespace Armageddon
         private static double _treeAttactRatio;
         private static double _treeDefenceRatio;
         private static double _treeLifeRatio;
-
 
         private SingletonWorldTree(string name, bool lootable, bool removable, Size itemSize, Position itemPositon, double defenceRatio, double attackRatio, double lifeRatio) 
             : base(name, lootable, removable, itemSize, itemPositon, defenceRatio, attackRatio, lifeRatio)

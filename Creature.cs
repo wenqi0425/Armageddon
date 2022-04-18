@@ -1,6 +1,4 @@
-﻿using Armageddon.AbstractFactoryAttackItems;
-using Armageddon.AbstractFactoryBuffItems;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -170,7 +168,7 @@ namespace Armageddon
 
         public double GetTotalLifePoint()
         {
-            this.TotalLifePoint = this.BasicLifePoint * GetTotalLifeRatio()
+            this.TotalLifePoint = this.BasicLifePoint * GetTotalLifeRatio();
             return TotalLifePoint;
         }
 

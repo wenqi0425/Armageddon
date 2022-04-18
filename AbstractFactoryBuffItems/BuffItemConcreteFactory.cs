@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Armageddon.AbstractFactoryBuffItems
+namespace Armageddon
 {
-    public abstract class BuffItemConcreteFactory : BuffItemAbstractFactory
+    public class BuffItemConcreteFactory : BuffItemAbstractFactory
     {
         Creature creature;
         public override AbstractBuffItem CreateBuffItem(BuffProduct itemType, string name, bool lootable, bool removable, Size itemSize, Position itemPositon, double defenceRatio, double attackRatio, double lifeRatio)

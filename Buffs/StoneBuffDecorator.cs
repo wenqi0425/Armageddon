@@ -11,6 +11,7 @@ namespace Armageddon
         public StoneBuffDecorator(string name, bool lootable, bool removable, Size itemSize, Position itemPositon, double defenceRatio, double attackRatio, double lifeRatio)
             : base(name, lootable, removable, itemSize, itemPositon, defenceRatio, attackRatio, lifeRatio)
         {
+            this.creature = creature;
         }
         
         public override double GetAttackRatio()

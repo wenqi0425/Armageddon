@@ -1,5 +1,4 @@
-﻿using Armageddon.AbstractFactoryAttackItems;
-
+﻿using Armageddon;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -85,33 +84,36 @@ namespace Armageddon
 
         private void CreateItem()
         {
-            var gun = new Gun(10, "Gun", 0.5, true, true, new(1, 1), GetRandomObjectPosition());
+            AttackItemConcreteFactory attackItemFactory = new AttackItemConcreteFactory();
+            var gun = attackItemFactory.CreateAttackItem(AttackProduct.Gun, 10, "Gun", 0.5, true, true, new(1, 1), GetRandomObjectPosition());
             worldObjects.Add(gun);
 
-            var knife = new Knife(1, "Knife", 0.1, true, true, new(1, 1), GetRandomObjectPosition());
+            var knife = attackItemFactory.CreateAttackItem(AttackProduct.Knife, 10, "Knife", 0.1, true, true, new(1, 1), GetRandomObjectPosition());
             worldObjects.Add(knife);
 
-            var sword = new Sword(5, "Sword", 0.2, true, true, new(1, 2), GetRandomObjectPosition());
+            var sword = attackItemFactory.CreateAttackItem(AttackProduct.Sword, 10, "Sword", 0.2, true, true, new(1, 2), GetRandomObjectPosition());
             worldObjects.Add(sword);
 
-            var armor = new Armor("Armor", 0.2, true, true, new(1, 1), GetRandomObjectPosition());
+            DenfenceItemConcreteFactory denfenceItemFactory = new DenfenceItemConcreteFactory();
+            var armor = denfenceItemFactory.CreateDefenceItem(DefenceProduct.Armor,"Armor", 0.2, true, true, new(1, 1), GetRandomObjectPosition());
             worldObjects.Add(armor);
 
-            var helmet = new Helmet("Helmet", 0.1, true, true, new(1, 1), GetRandomObjectPosition());
+            var helmet = denfenceItemFactory.CreateDefenceItem(DefenceProduct.Helmet, "Helmet", 0.1, true, true, new(1, 1), GetRandomObjectPosition());
             worldObjects.Add(helmet);
 
-            var shield = new Shield("Shield", 0.3, true, true, new(1, 1), GetRandomObjectPosition());
+            var shield = denfenceItemFactory.CreateDefenceItem(DefenceProduct.Shield,"Shield", 0.3, true, true, new(1, 1), GetRandomObjectPosition());
             worldObjects.Add(shield);
 
-            var flower = new FlowerBuffDecorator("Flower", true, true, new Size(1, 1), GetRandomObjectPosition(),
+            BuffItemConcreteFactory buffItemFactory = new BuffItemConcreteFactory();
+            var flower = buffItemFactory.CreateBuffItem(BuffProduct.MagicFlower, "Flower", true, true, new Size(1, 1), GetRandomObjectPosition(),
                 Configuration.FlowerAttackRatio, Configuration.FlowerDefenceRatio, Configuration.FlowerLifeRatio);
             worldObjects.Add(flower);
 
-            var stone = new StoneBuffDecorator("Stone", false, true, new Size(1, 1), GetRandomObjectPosition(),
+            var stone = buffItemFactory.CreateBuffItem(BuffProduct.NormalStone,"Stone", false, true, new Size(1, 1), GetRandomObjectPosition(),
                 Configuration.StoneAttackRatio, Configuration.StoneDefenceRatio, Configuration.StoneLifeRatio);
             worldObjects.Add(stone);
 
-            var worldTree = new WorldTreeBuffDecorator("The World Tree", false, false, new Size(1, 1),
+            var worldTree = buffItemFactory.CreateBuffItem(BuffProduct.SingletonWorldTree,"The World Tree", false, false, new Size(1, 1),
                 new Position(Configuration.TreePosistionX, Configuration.TreePosistionY), Configuration.TreeAttackRatio,
                 Configuration.TreeDefenceRatio, Configuration.TreeLifeRatio);
             worldObjects.Add(worldTree);

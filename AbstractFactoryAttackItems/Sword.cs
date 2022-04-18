@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Armageddon.AbstractFactoryAttackItems
+namespace Armageddon
 {
     public class Sword : AbstractAttackItem
     {
